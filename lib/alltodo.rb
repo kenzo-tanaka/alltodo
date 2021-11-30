@@ -6,7 +6,7 @@ module Alltodo
   class Error < StandardError; end
   # Your code goes here...
   class MdFormatter
-    def add(text)
+    def run(text)
       "- [ ] #{text}"
     end
   end

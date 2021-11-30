@@ -6,9 +6,9 @@ RSpec.describe Alltodo do
   end
 
   describe Alltodo::MdFormatter do
-    describe 'add' do
+    describe 'run' do
       it 'return formatted todo' do
-        result = Alltodo::MdFormatter.new.add('New todo')
+        result = Alltodo::MdFormatter.new.run('New todo')
         expect = '- [ ] New todo'
         expect(result).to eq(expect)
       end
