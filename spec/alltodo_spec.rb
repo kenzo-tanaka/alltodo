@@ -15,32 +15,56 @@ RSpec.describe Alltodo do
 
   describe Alltodo::StackTodo do
     let(:path) { 'stack.md' }
-    let(:text) do
-      <<~TEXT.chomp
-        - [ ] Old todo1
-        - [ ] Old todo2
-        - [ ] Old todo3
-        - [ ] New todo
-      TEXT
-    end
-    before 'setup file content' do
-      File.open(path, 'w') do |f|
-        f << <<~TEXT
+
+    describe 'add' do
+      let(:text) do
+        <<~TEXT.chomp
           - [ ] Old todo1
           - [ ] Old todo2
           - [ ] Old todo3
+          - [ ] New todo
         TEXT
       end
-    end
+      before 'setup file content' do
+        File.open(path, 'w') do |f|
+          f << <<~TEXT
+            - [ ] Old todo1
+            - [ ] Old todo2
+            - [ ] Old todo3
+          TEXT
+        end
+      end
 
-    after 'clean up file content' do
-      File.open(path, 'w')
-    end
-
-    describe 'add' do
+      after 'clean up file content' do
+        File.open(path, 'w')
+      end
       it 'write todo to stack' do
         Alltodo::StackTodo.new.add('- [ ] New todo')
         expect(File.read(path)).to eq text
+      end
+    end
+
+    describe 'all' do
+      let(:text) do
+        <<~TEXT
+          - [ ] Buy coffee
+          - [ ] Read tech book
+          - [ ] Running
+          - [ ] Develop personal project
+        TEXT
+      end
+
+      before 'setup file content' do
+        File.open(path, 'w') { |f| f << text }
+      end
+
+      after 'clean up file content' do
+        File.open(path, 'w')
+      end
+
+      it 'returns all stack tasks' do
+        result = Alltodo::StackTodo.new.all
+        expect(result).to eq text
       end
     end
   end
