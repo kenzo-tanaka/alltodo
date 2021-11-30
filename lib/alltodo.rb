@@ -10,4 +10,10 @@ module Alltodo
       "- [ ] #{text}"
     end
   end
+
+  class StackTodo
+    def add(text)
+      File.open('stack.md', 'a') { |f| f << text }
+    end
+  end
 end
